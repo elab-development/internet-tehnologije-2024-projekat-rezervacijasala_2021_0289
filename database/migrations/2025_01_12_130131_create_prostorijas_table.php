@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prostorija', function (Blueprint $table) {
+        Schema::create('prostorijas', function (Blueprint $table) {
             $table->id('idProstorija'); // Primarni ključ
             $table->integer('kapacitet'); // Kapacitet prostorije
             $table->string('tip'); // Tip prostorije
             $table->timestamps(); // Kreira 'created_at' i 'updated_at' kolone
         });
+        
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prostorija');
+        Schema::dropIfExists('prostorijas');
     }
 };

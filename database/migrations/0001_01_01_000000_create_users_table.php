@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('ime');
             $table->string('prezime');
             $table->string('sifra');
+            $table->string('tipKorisnik');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('brTelefona');
@@ -44,8 +45,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

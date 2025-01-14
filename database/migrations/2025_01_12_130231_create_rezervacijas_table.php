@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->timestamps();
+        Schema::create('rezervacijas', function (Blueprint $table) {
+            $table->id(); // Primarni ključ
+            $table->date('datum'); // Kolona za datum
+            $table->string('napomena'); // Kolona za napomenu
+            $table->timestamps(); // Kolone za created_at i updated_at
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('rezervacijas');
     }
 };
