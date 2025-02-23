@@ -36,11 +36,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($user_id)
     {
-        //
-    }
+        $user=User::find($user_id);
+        if(is_null($user)){
 
+            return response()->json('Data not found', 404);
+            return response()->json($user);
+
+    }
+    }
     /**
      * Show the form for editing the specified resource.
      */

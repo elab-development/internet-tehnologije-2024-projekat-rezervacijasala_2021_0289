@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('ime');
             $table->string('prezime');
-            $table->string('sifra');
-            $table->string('tipKorisnik');
+            $table->string('password');
+            $table->string('tipKorisnik')->default('korisnik');//podrazumjevana vrijednost je
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('brTelefona');
+            $table->string('brTelefona')->default('38265887732');
             $table->rememberToken();
             $table->timestamps();
         });
