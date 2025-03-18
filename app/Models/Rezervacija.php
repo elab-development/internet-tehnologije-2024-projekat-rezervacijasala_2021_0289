@@ -19,8 +19,8 @@ class Rezervacija extends Model
       return $this->belongsTo(Prostorija::class, 'prostorija_id', 'idProstorija');  
     }
 
-    public function user() 
-    {
-    return $this->belongsTo(User::class);  
-    }
+    public function user() {
+      return $this->belongsTo(User::class, 'user_id', 'id');  
+  }
+  
 }
