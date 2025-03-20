@@ -21,8 +21,8 @@ class RezervacijaFactory extends Factory
         return [
             'datum' => $this->faker->date,
             'napomena' => $this->faker->sentence,
-            'prostorija_id' => Prostorija::inRandomOrder()->first()->idProstorija ?? 1, // ✅ Uzimamo nasumičnu prostoriju
-            'user_id' => User::inRandomOrder()->first()->id ?? 1, // ✅ Uzimamo nasumičnog korisnika
+            'prostorija_id' => Prostorija::inRandomOrder()->first()->idProstorija ?? 1,
+            'user_id' => User::inRandomOrder()->first()->id ?? 1,
         ];
     }
 }

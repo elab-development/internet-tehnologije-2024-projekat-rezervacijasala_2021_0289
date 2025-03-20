@@ -12,12 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prostorijas', function (Blueprint $table) {
-            $table->bigIncrements('idProstorija'); // Ispravan primarni ključ
-            $table->integer('kapacitet');
-            $table->string('tip');
+            $table->bigIncrements('idProstorija'); 
+            $table->string('tip'); 
+            $table->string('ulica')->default('Nepoznata ulica');
+            $table->string('grad')->default('Beograd'); 
+            $table->integer('kapacitet'); 
+            $table->decimal('cena_po_satu', 8, 2); 
+            $table->text('opis'); 
+            $table->string('slika');
             $table->timestamps();
         });
-        
     }
 
     /**

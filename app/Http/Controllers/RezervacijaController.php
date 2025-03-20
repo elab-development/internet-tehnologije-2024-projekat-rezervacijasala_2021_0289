@@ -24,17 +24,17 @@ class RezervacijaController extends Controller
      */
     public function store(Request $request)
 {
-    // 🔹 Validacija podataka (uklonjen 'user_id' jer ga automatski dodajemo)
+    
     $validatedData = $request->validate([
         'datum' => 'required|date',
         'napomena' => 'string|nullable',
         'prostorija_id' => 'required|exists:prostorijas,idProstorija',
     ]);
 
-    // 🔹 Dodajemo user_id trenutno prijavljenog korisnika
+    
     $validatedData['user_id'] = $request->user()->id;
 
-    // 🔹 Kreiramo rezervaciju
+    
     $rezervacija = Rezervacija::create($validatedData);
 
     return response()->json([
@@ -63,10 +63,19 @@ class RezervacijaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id)
+{
+    $rezervacija = Rezervacija::find($id);
+
+    if (!$rezervacija) {
+        return response()->json(['message' => 'Rezervacija nije pronađena!'], 404);
     }
+
+    $rezervacija->delete(); 
+
+    return response()->json(['message' => 'Rezervacija uspešno otkazana!'], 200);
+}
+
 
     public function create(Request $request) {
      /*   $data = $request->validate([
@@ -117,8 +126,8 @@ class RezervacijaController extends Controller
 */
 public function mojeRezervacije(Request $request)
 {
-    $user = $request->user(); // Dobijamo prijavljenog korisnika
-    $rezervacije = Rezervacija::with('prostorija') // Učitavamo povezane prostorije
+    $user = $request->user(); 
+    $rezervacije = Rezervacija::with('prostorija') 
         ->where('user_id', $user->id)
         ->get();
 

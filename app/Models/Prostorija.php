@@ -9,13 +9,22 @@ class Prostorija extends Model
 {
     use HasFactory;
     
-    protected $table = 'prostorijas';  // Povezivanje sa tabelom
+    protected $table = 'prostorijas';  
 
-    protected $primaryKey = 'idProstorija'; // Postavljamo ispravan primarni ključ
-    public $incrementing = true; // Ako koristi auto-increment
-    protected $keyType = 'int'; // Ako je broj
+    protected $primaryKey = 'idProstorija'; 
+    public $incrementing = true; 
+    protected $keyType = 'int'; 
 
-    protected $fillable = ['kapacitet', 'tip'];
+    
+    protected $fillable = [
+        'kapacitet', 
+        'tip', 
+        'ulica', 
+        'grad', 
+        'cena_po_satu', 
+        'opis',
+        'slika' 
+    ];
 
     public function rezervacije() {
         return $this->hasMany(Rezervacija::class, 'prostorija_id', 'idProstorija');

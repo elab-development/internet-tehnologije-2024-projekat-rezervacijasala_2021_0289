@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Rezervacija extends Model
 {
     use HasFactory;
-    protected $table = 'rezervacijas'; // Osigurava da Laravel koristi tačno ime tabele
+    protected $table = 'rezervacijas'; 
 
     protected $fillable = ['datum', 'napomena', 'prostorija_id', "user_id"];
 
