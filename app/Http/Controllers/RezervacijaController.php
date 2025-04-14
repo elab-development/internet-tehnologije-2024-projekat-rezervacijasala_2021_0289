@@ -134,6 +134,44 @@ public function mojeRezervacije(Request $request)
     return response()->json($rezervacije);
 }
 
+// Dovuci sve rezervacije sortirane po datumu ASC
+public function sveRezervacije()
+{
+    $rezervacije = Rezervacija::with('user', 'prostorija')
+        ->orderBy('datum', 'asc')
+        ->get();
+
+    return response()->json($rezervacije);
+}
+
+// Admin otkazuje rezervaciju po ID
+public function adminOtkazi($id)
+{
+    $rezervacija = Rezervacija::find($id);
+    if (!$rezervacija) {
+        return response()->json(['message' => 'Rezervacija nije pronađena'], 404);
+    }
+
+    $rezervacija->delete();
+    return response()->json(['message' => 'Rezervacija uspešno otkazana!']);
+}
+
+// Admin banuje korisnika – briše sve njegove rezervacije i njega
+public function banujKorisnika($id)
+{
+    $korisnik = \App\Models\User::find($id);
+    if (!$korisnik) {
+        return response()->json(['message' => 'Korisnik nije pronađen!'], 404);
+    }
+
+    // Brišemo njegove rezervacije
+    \App\Models\Rezervacija::where('user_id', $id)->delete();
+
+    // Brišemo korisnika
+    $korisnik->delete();
+
+    return response()->json(['message' => 'Korisnik uspešno banovan!']);
+}
 
 
 }

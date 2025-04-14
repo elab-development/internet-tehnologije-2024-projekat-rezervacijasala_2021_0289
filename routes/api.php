@@ -37,9 +37,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/rezervacije/{id}', [RezervacijaController::class, 'update']);  // Ažuriranje rezervacije
     Route::delete('/rezervacije/{id}', [RezervacijaController::class, 'destroy']);  // Brisanje rezervacije
     Route::middleware('auth:sanctum')->get('/my-reservations', [RezervacijaController::class, 'mojeRezervacije']);
+    Route::delete('/prostorije/{id}', [ProstorijaController::class, 'destroy']);
+    Route::post('/prostorije', [ProstorijaController::class, 'store']);
 
 });
 Route::middleware('auth:sanctum')->delete('/rezervacije/{id}', [RezervacijaController::class, 'destroy']);
 
 Route::get('/prostorije', [ProstorijaController::class, 'index']);
 Route::get('/prostorije/{id}', [ProstorijaController::class, 'show']);
+
+Route::get('/admin/rezervacije', [RezervacijaController::class, 'sveRezervacije']);
+Route::delete('/admin/rezervacije/{id}', [RezervacijaController::class, 'adminOtkazi']);
+Route::delete('/admin/banuj-korisnika/{id}', [RezervacijaController::class, 'banujKorisnika']);
+

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class Prostorija extends Model
 {
     use HasFactory;
@@ -15,7 +15,7 @@ class Prostorija extends Model
     public $incrementing = true; 
     protected $keyType = 'int'; 
 
-    
+    public $timestamps = true;
     protected $fillable = [
         'kapacitet', 
         'tip', 
@@ -29,4 +29,17 @@ class Prostorija extends Model
     public function rezervacije() {
         return $this->hasMany(Rezervacija::class, 'prostorija_id', 'idProstorija');
     }
+// Accessor za puni URL slike
+protected $appends = ['slika_url'];
+public function getSlikaUrlAttribute()
+    {
+        if (!$this->slika) return null;
+
+        // Ako slika počinje sa http (već je URL), samo je vrati
+        if (Str::startsWith($this->slika, ['http://', 'https://'])) {
+            return $this->slika;
+        }
+ // Inače dodaj APP_URL ispred lokalnog fajla
+ return asset($this->slika);
+}
 }
