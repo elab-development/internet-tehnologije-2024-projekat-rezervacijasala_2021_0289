@@ -172,6 +172,10 @@ public function banujKorisnika($id)
 
     return response()->json(['message' => 'Korisnik uspešno banovan!']);
 }
-
+public function zauzetiDatumi($id)
+{
+    $zauzeti = Rezervacija::where('prostorija_id', $id)->pluck('datum');
+    return response()->json($zauzeti);
+}
 
 }

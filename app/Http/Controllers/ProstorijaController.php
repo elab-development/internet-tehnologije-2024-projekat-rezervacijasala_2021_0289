@@ -15,10 +15,28 @@ class ProstorijaController extends BaseController
         $this->middleware('auth:sanctum')->only(['store', 'destroy']);
     }
 
-    // Vrati sve prostorije
-    public function index()
+    // Vrati sve prostorije (sa filtriranjem)
+    public function index(Request $request)
     {
-        return response()->json(Prostorija::all());
+        $query = Prostorija::query();
+
+        if ($request->has('grad')) {
+            $query->where('grad', $request->grad);
+        }
+
+        if ($request->has('tip')) {
+            $query->where('tip', $request->tip);
+        }
+
+        if ($request->has('minCena')) {
+            $query->where('cena_po_satu', '>=', $request->minCena);
+        }
+
+        if ($request->has('maxCena')) {
+            $query->where('cena_po_satu', '<=', $request->maxCena);
+        }
+
+        return response()->json($query->get());
     }
 
     // Vrati jednu prostoriju po ID
@@ -40,7 +58,6 @@ class ProstorijaController extends BaseController
         if (!$user || $user->tipKorisnik !== 'admin') {
             return response()->json(['message' => 'Pristup odbijen.'], 403);
         }
-        
 
         $validated = $request->validate([
             'tip' => 'required|string',

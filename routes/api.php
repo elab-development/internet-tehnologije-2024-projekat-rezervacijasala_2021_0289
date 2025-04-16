@@ -50,3 +50,4 @@ Route::get('/admin/rezervacije', [RezervacijaController::class, 'sveRezervacije'
 Route::delete('/admin/rezervacije/{id}', [RezervacijaController::class, 'adminOtkazi']);
 Route::delete('/admin/banuj-korisnika/{id}', [RezervacijaController::class, 'banujKorisnika']);
 
+Route::get('/prostorije/{id}/zauzeti-datumi', [RezervacijaController::class, 'zauzetiDatumi']);
