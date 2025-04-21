@@ -36,7 +36,9 @@ class ProstorijaController extends BaseController
             $query->where('cena_po_satu', '<=', $request->maxCena);
         }
 
-        return response()->json($query->get());
+    // Backend paginacija
+        $perPage = $request->query('perPage', 6);
+    return response()->json($query->paginate($perPage));
     }
 
     // Vrati jednu prostoriju po ID
@@ -71,7 +73,7 @@ class ProstorijaController extends BaseController
 
         if ($request->hasFile('slika')) {
             $path = $request->file('slika')->store('slike', 'public');
-            $validated['slika'] = asset('storage/' . $path);
+            $validated['slika'] = '/storage/' . $path;
         }
 
         $prostorija = Prostorija::create($validated);
