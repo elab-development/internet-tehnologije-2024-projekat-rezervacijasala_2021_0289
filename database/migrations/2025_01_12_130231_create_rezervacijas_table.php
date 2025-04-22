@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
 
             $table->date('datum'); // Kolona za datum
-            $table->string('napomena'); // Kolona za napomenu
+            $table->string('napomena')->nullable(); // Kolona za napomenu
             $table->timestamps(); // Kolone za created_at i updated_at
         });
     }

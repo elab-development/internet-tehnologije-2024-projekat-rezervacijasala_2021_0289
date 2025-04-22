@@ -51,3 +51,4 @@ Route::delete('/admin/rezervacije/{id}', [RezervacijaController::class, 'adminOt
 Route::delete('/admin/banuj-korisnika/{id}', [RezervacijaController::class, 'banujKorisnika']);
 
 Route::get('/prostorije/{id}/zauzeti-datumi', [RezervacijaController::class, 'zauzetiDatumi']);
+Route::get('/tipovi-prostorija', [ProstorijaController::class, 'tipovi']);

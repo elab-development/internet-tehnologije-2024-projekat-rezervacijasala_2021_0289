@@ -97,4 +97,12 @@ class ProstorijaController extends BaseController
 
         return response()->json(['message' => 'Prostorija uspešno obrisana.']);
     }
+
+
+    public function tipovi()
+{
+    $tipovi = Prostorija::select('tip')->distinct()->pluck('tip');
+    return response()->json($tipovi);
+}
+
 }
