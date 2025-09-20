@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prostorija;
+use App\Models\Rezervacija;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class ProstorijaController extends BaseController
@@ -15,7 +15,6 @@ class ProstorijaController extends BaseController
         $this->middleware('auth:sanctum')->only(['store', 'destroy']);
     }
 
-    // Vrati sve prostorije (sa filtriranjem)
     public function index(Request $request)
     {
         $query = Prostorija::query();
@@ -23,25 +22,29 @@ class ProstorijaController extends BaseController
         if ($request->has('grad')) {
             $query->where('grad', $request->grad);
         }
-
         if ($request->has('tip')) {
             $query->where('tip', $request->tip);
         }
-
         if ($request->has('minCena')) {
             $query->where('cena_po_satu', '>=', $request->minCena);
         }
-
         if ($request->has('maxCena')) {
             $query->where('cena_po_satu', '<=', $request->maxCena);
         }
+        if ($request->has('slobodanDatum')) {
+            $datum = $request->slobodanDatum;
 
-    // Backend paginacija
+            $zauzeteProstorije = Rezervacija::where('datum', $datum)
+                ->pluck('prostorija_id')
+                ->toArray();
+
+            $query->whereNotIn('idProstorija', $zauzeteProstorije);
+        }
+
         $perPage = $request->query('perPage', 6);
-    return response()->json($query->paginate($perPage));
+        return response()->json($query->paginate($perPage));
     }
 
-    // Vrati jednu prostoriju po ID
     public function show($id)
     {
         $prostorija = Prostorija::find($id);
@@ -53,7 +56,6 @@ class ProstorijaController extends BaseController
         return response()->json($prostorija);
     }
 
-    //  Dodavanje nove prostorije
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -84,7 +86,6 @@ class ProstorijaController extends BaseController
         ], 201);
     }
 
-    //  Brisanje prostorije
     public function destroy($id)
     {
         $prostorija = Prostorija::find($id);
@@ -98,11 +99,9 @@ class ProstorijaController extends BaseController
         return response()->json(['message' => 'Prostorija uspešno obrisana.']);
     }
 
-
     public function tipovi()
-{
-    $tipovi = Prostorija::select('tip')->distinct()->pluck('tip');
-    return response()->json($tipovi);
-}
-
+    {
+        $tipovi = Prostorija::select('tip')->distinct()->pluck('tip');
+        return response()->json($tipovi);
+    }
 }

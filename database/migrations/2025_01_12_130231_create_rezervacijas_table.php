@@ -16,11 +16,11 @@ return new class extends Migration
            // $table->foreignId('prostorija_id')->constrained('prostorijas','idProstorija')->onDelete('cascade');
            // $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade');
 
-            // 🔹 Dodajemo ispravno povezivanje sa tabelom "prostorijas"
+            // Povezivanje sa tabelom "prostorijas"
             $table->unsignedBigInteger('prostorija_id')->nullable();
             $table->foreign('prostorija_id')->references('idProstorija')->on('prostorijas')->onDelete('cascade');
 
-            // 🔹 Povezivanje sa tabelom "users"
+            //  Povezivanje sa tabelom "users"
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
 
             $table->date('datum'); // Kolona za datum
