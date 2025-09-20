@@ -1,0 +1,83 @@
+.admin-dashboard {
+  padding: 30px;
+  min-height: 100vh;
+  color: white;
+  background-color: #064093;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 1000'%3E%3Cg fill-opacity='0.96'%3E%3Ccircle fill='%23064093' cx='50' cy='0' r='50'/%3E%3Cg fill='%23084298' %3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3C/g%3E%3Ccircle fill='%2309449c' cx='50' cy='100' r='50'/%3E%3Cg fill='%230b45a1' %3E%3Ccircle cx='0' cy='150' r='50'/%3E%3Ccircle cx='100' cy='150' r='50'/%3E%3C/g%3E%3Ccircle fill='%230d47a5' cx='50' cy='200' r='50'/%3E%3Cg fill='%230f49a9' %3E%3Ccircle cx='0' cy='250' r='50'/%3E%3Ccircle cx='100' cy='250' r='50'/%3E%3C/g%3E%3Ccircle fill='%23124bad' cx='50' cy='300' r='50'/%3E%3Cg fill='%23144db1' %3E%3Ccircle cx='0' cy='350' r='50'/%3E%3Ccircle cx='100' cy='350' r='50'/%3E%3C/g%3E%3Ccircle fill='%23174eb5' cx='50' cy='400' r='50'/%3E%3Cg fill='%231950b9' %3E%3Ccircle cx='0' cy='450' r='50'/%3E%3Ccircle cx='100' cy='450' r='50'/%3E%3C/g%3E%3Ccircle fill='%231c52bd' cx='50' cy='500' r='50'/%3E%3Cg fill='%231f54c0' %3E%3Ccircle cx='0' cy='550' r='50'/%3E%3Ccircle cx='100' cy='550' r='50'/%3E%3C/g%3E%3Ccircle fill='%232156c4' cx='50' cy='600' r='50'/%3E%3Cg fill='%232558c7' %3E%3Ccircle cx='0' cy='650' r='50'/%3E%3Ccircle cx='100' cy='650' r='50'/%3E%3C/g%3E%3Ccircle fill='%232859ca' cx='50' cy='700' r='50'/%3E%3Cg fill='%232b5bcd' %3E%3Ccircle cx='0' cy='750' r='50'/%3E%3Ccircle cx='100' cy='750' r='50'/%3E%3C/g%3E%3Ccircle fill='%232e5ed0' cx='50' cy='800' r='50'/%3E%3Cg fill='%233561d0' %3E%3Ccircle cx='0' cy='850' r='50'/%3E%3Ccircle cx='100' cy='850' r='50'/%3E%3C/g%3E%3Ccircle fill='%233d65cf' cx='50' cy='900' r='50'/%3E%3Cg fill='%234469ce' %3E%3Ccircle cx='0' cy='950' r='50'/%3E%3Ccircle cx='100' cy='950' r='50'/%3E%3C/g%3E%3Ccircle fill='%234B6DCD' cx='50' cy='1000' r='50'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: contain;
+}
+
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #ffffff;
+}
+
+.sala-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 3 u redu kad je dovoljno prostora */
+  gap: 20px;
+}
+
+.sala-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.sala-card:hover {
+  transform: scale(1.02);
+}
+
+.sala-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.sala-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  height: 100%;
+}
+
+.sala-info h3 {
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.sala-info p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #444;
+  flex-grow: 0;
+}
+
+
+.delete-btn {
+  margin-top: auto; /* Gura dugme na dno */
+  align-self: center;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}

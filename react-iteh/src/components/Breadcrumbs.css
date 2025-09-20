@@ -1,0 +1,19 @@
+.breadcrumb-nav {
+    margin: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .breadcrumb-link {
+    color: #aacff7;
+    text-decoration: none;
+  }
+  
+  .breadcrumb-link:hover {
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-current {
+    color: #ffffff;
+  }
+  

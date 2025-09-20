@@ -1,0 +1,128 @@
+.products-container {
+  text-align: center;
+  padding: 0;
+}
+
+body {
+  background-color: #064093;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 1000'%3E%3Cg fill-opacity='0.96'%3E%3Ccircle fill='%23064093' cx='50' cy='0' r='50'/%3E%3Cg fill='%23084298' %3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3C/g%3E%3Ccircle fill='%2309449c' cx='50' cy='100' r='50'/%3E%3Cg fill='%230b45a1' %3E%3Ccircle cx='0' cy='150' r='50'/%3E%3Ccircle cx='100' cy='150' r='50'/%3E%3C/g%3E%3Ccircle fill='%230d47a5' cx='50' cy='200' r='50'/%3E%3Cg fill='%230f49a9' %3E%3Ccircle cx='0' cy='250' r='50'/%3E%3Ccircle cx='100' cy='250' r='50'/%3E%3C/g%3E%3Ccircle fill='%23124bad' cx='50' cy='300' r='50'/%3E%3Cg fill='%23144db1' %3E%3Ccircle cx='0' cy='350' r='50'/%3E%3Ccircle cx='100' cy='350' r='50'/%3E%3C/g%3E%3Ccircle fill='%23174eb5' cx='50' cy='400' r='50'/%3E%3Cg fill='%231950b9' %3E%3Ccircle cx='0' cy='450' r='50'/%3E%3Ccircle cx='100' cy='450' r='50'/%3E%3C/g%3E%3Ccircle fill='%231c52bd' cx='50' cy='500' r='50'/%3E%3Cg fill='%231f54c0' %3E%3Ccircle cx='0' cy='550' r='50'/%3E%3Ccircle cx='100' cy='550' r='50'/%3E%3C/g%3E%3Ccircle fill='%232156c4' cx='50' cy='600' r='50'/%3E%3Cg fill='%232558c7' %3E%3Ccircle cx='0' cy='650' r='50'/%3E%3Ccircle cx='100' cy='650' r='50'/%3E%3C/g%3E%3Ccircle fill='%232859ca' cx='50' cy='700' r='50'/%3E%3Cg fill='%232b5bcd' %3E%3Ccircle cx='0' cy='750' r='50'/%3E%3Ccircle cx='100' cy='750' r='50'/%3E%3C/g%3E%3Ccircle fill='%232e5ed0' cx='50' cy='800' r='50'/%3E%3Cg fill='%233561d0' %3E%3Ccircle cx='0' cy='850' r='50'/%3E%3Ccircle cx='100' cy='850' r='50'/%3E%3C/g%3E%3Ccircle fill='%233d65cf' cx='50' cy='900' r='50'/%3E%3Cg fill='%234469ce' %3E%3Ccircle cx='0' cy='950' r='50'/%3E%3Ccircle cx='100' cy='950' r='50'/%3E%3C/g%3E%3Ccircle fill='%234B6DCD' cx='50' cy='1000' r='50'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: contain;
+  color: white;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.hero-section {
+  background: transparent;
+  padding: 100px 20px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content h1 {
+  font-size: 44px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.hero-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.hero-filters input,
+.hero-filters select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 160px;
+  font-size: 14px;
+}
+
+.search-button {
+  background-color: #ffe600;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #ffd100;
+}
+
+.section-title {
+  font-size: 42px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  justify-items: center;
+  padding: 0 20px 40px;
+}
+
+.product-card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  color: #000;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: white;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #ffffff33;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: white;
+  font-weight: bold;
+}
