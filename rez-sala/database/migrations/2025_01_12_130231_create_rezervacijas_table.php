@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rezervacijas', function (Blueprint $table) {
-            $table->id(); // Primarni ključ
-           // $table->foreignId('prostorija_id')->constrained('prostorijas','idProstorija')->onDelete('cascade');
-           // $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade');
+            $table->id(); 
 
             // Povezivanje sa tabelom "prostorijas"
             $table->unsignedBigInteger('prostorija_id')->nullable();
@@ -23,9 +21,9 @@ return new class extends Migration
             //  Povezivanje sa tabelom "users"
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
 
-            $table->date('datum'); // Kolona za datum
-            $table->string('napomena')->nullable(); // Kolona za napomenu
-            $table->timestamps(); // Kolone za created_at i updated_at
+            $table->date('datum'); 
+            $table->string('napomena')->nullable(); 
+            $table->timestamps(); 
         });
     }
 

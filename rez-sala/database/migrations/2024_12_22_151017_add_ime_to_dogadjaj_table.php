@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('dogadjaj', function (Blueprint $table) {
-            $table->string('ime')->after('idDogadjaj'); // Dodaje kolonu 'ime' nakon 'idDogadjaj'
+            $table->string('ime')->after('idDogadjaj'); 
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('dogadjaj', function (Blueprint $table) {
-            $table->dropColumn('ime'); // Uklanja kolonu 'ime' ako se migracija poništava
+            $table->dropColumn('ime'); 
         });
     }
 };

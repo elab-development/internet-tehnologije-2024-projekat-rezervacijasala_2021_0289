@@ -41,7 +41,7 @@ class ProstorijaController extends BaseController
             $query->whereNotIn('idProstorija', $zauzeteProstorije);
         }
 
-        $perPage = $request->query('perPage', 6);
+        $perPage = $request->query('perPage', 9);
         return response()->json($query->paginate($perPage));
     }
 

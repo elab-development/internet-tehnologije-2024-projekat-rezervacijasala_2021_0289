@@ -29,7 +29,7 @@ class Prostorija extends Model
     public function rezervacije() {
         return $this->hasMany(Rezervacija::class, 'prostorija_id', 'idProstorija');
     }
-// Accessor za puni URL slike
+
 protected $appends = ['slika_url'];
 public function getSlikaUrlAttribute()
     {

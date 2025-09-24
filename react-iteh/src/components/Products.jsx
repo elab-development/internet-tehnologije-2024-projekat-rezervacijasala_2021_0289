@@ -1,49 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import OneProduct from "./OneProduct";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
 import "./Products.css";
 
 const Products = () => {
-  const [salas, setSalas] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({ grad: '', tip: '', minCena: '', maxCena: '', slobodanDatum: '' });
+  const [filters, setFilters] = useState({ grad: "", tip: "", minCena: "", maxCena: "", slobodanDatum: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
-
   const navigate = useNavigate();
 
-  const fetchSalas = async () => {
-    try {
-      const queryParams = new URLSearchParams();
-      if (filters.grad) queryParams.append("grad", filters.grad);
-      if (filters.tip) queryParams.append("tip", filters.tip);
-      if (filters.minCena) queryParams.append("minCena", filters.minCena);
-      if (filters.maxCena) queryParams.append("maxCena", filters.maxCena);
-      if (filters.slobodanDatum) queryParams.append("slobodanDatum", filters.slobodanDatum);
-
-      queryParams.append("page", currentPage);
-      queryParams.append("perPage", itemsPerPage);
-
-      const url = `http://127.0.0.1:8000/api/prostorije?${queryParams.toString()}`;
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`Greška u odgovoru sa servera! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setSalas(data);
-    } catch (error) {
-      console.error("Greška pri učitavanju podataka:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSalas();
+  
+  const url = useMemo(() => {
+    const qp = new URLSearchParams();
+    if (filters.grad) qp.append("grad", filters.grad);
+    if (filters.tip) qp.append("tip", filters.tip);
+    if (filters.minCena) qp.append("minCena", filters.minCena);
+    if (filters.maxCena) qp.append("maxCena", filters.maxCena);
+    if (filters.slobodanDatum) qp.append("slobodanDatum", filters.slobodanDatum);
+    qp.append("page", currentPage);
+    qp.append("perPage", itemsPerPage);
+    return `http://127.0.0.1:8000/api/prostorije?${qp.toString()}`;
   }, [filters, currentPage]);
 
+  const { data: salas, loading, error } = useFetch(url);
+
+  // Resetuj na prvu stranicu kad se promene filteri
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
@@ -54,7 +36,7 @@ const Products = () => {
   };
 
   const resetFilters = () => {
-    setFilters({ grad: '', tip: '', minCena: '', maxCena: '', slobodanDatum: '' });
+    setFilters({ grad: "", tip: "", minCena: "", maxCena: "", slobodanDatum: "" });
   };
 
   return (
@@ -69,17 +51,22 @@ const Products = () => {
             <input type="text" name="tip" placeholder="Tip sale" value={filters.tip} onChange={handleFilterChange} />
             <input type="number" name="minCena" placeholder="Min cena (€)" value={filters.minCena} onChange={handleFilterChange} />
             <input type="number" name="maxCena" placeholder="Max cena (€)" value={filters.maxCena} onChange={handleFilterChange} />
-            <input type="date" name="slobodanDatum" placeholder="Slobodan datum" value={filters.slobodanDatum} onChange={handleFilterChange} />
-            <button className="search-button" onClick={fetchSalas}>Pretraži</button>
+            <input type="date" name="slobodanDatum" value={filters.slobodanDatum} onChange={handleFilterChange} />
+            {}
+            <button className="search-button" onClick={() => {  }}>
+              Pretraži
+            </button>
+            <button className="search-button" onClick={resetFilters}>Reset</button>
           </div>
         </div>
       </div>
 
       <h2 className="section-title">Sale za rezervaciju</h2>
 
-      {loading ? (
-        <p className="loading-text">Učitavanje sala...</p>
-      ) : salas?.data?.length > 0 ? (
+      {loading && <p className="loading-text">Učitavanje sala...</p>}
+      {error && <p className="error-text">Greška: {error}</p>}
+
+      {!loading && !error && (salas?.data?.length > 0 ? (
         <>
           <div className="products-grid">
             {salas.data.map((sala) => (
@@ -91,18 +78,18 @@ const Products = () => {
                 capacity={sala.kapacitet}
                 price={`${sala.cena_po_satu}€/h`}
                 image={`${sala.slika}`}
-                onDetailsClick={() => navigate(`/reservation/${sala.idProstorija}`)}
+                onDetailsClick={() => navigate(`/rezervacija/${sala.idProstorija}`)}
               />
             ))}
           </div>
 
           {salas.last_page > 1 && (
             <div className="pagination">
-              <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
                 Prethodna
               </button>
               <span>Stranica {salas.current_page} od {salas.last_page}</span>
-              <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, salas.last_page))} disabled={currentPage === salas.last_page}>
+              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, salas.last_page))} disabled={currentPage === salas.last_page}>
                 Sledeća
               </button>
             </div>
@@ -110,7 +97,7 @@ const Products = () => {
         </>
       ) : (
         <p className="no-results">Nema pronađenih sala za zadate filtere.</p>
-      )}
+      ))}
     </div>
   );
 };

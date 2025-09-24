@@ -110,7 +110,7 @@ class RezervacijaController extends Controller
         return response()->json($rezervacije);
     }
 
-    // Dovuci sve rezervacije sortirane po datumu ASC
+    
     public function sveRezervacije()
     {
         $rezervacije = Rezervacija::with('user', 'prostorija')
@@ -120,7 +120,7 @@ class RezervacijaController extends Controller
         return response()->json($rezervacije);
     }
 
-    // Admin otkazuje rezervaciju po ID
+    
     public function adminOtkazi($id)
     {
         $rezervacija = Rezervacija::find($id);
@@ -132,7 +132,7 @@ class RezervacijaController extends Controller
         return response()->json(['message' => 'Rezervacija uspešno otkazana!']);
     }
 
-    // Admin banuje korisnika – briše sve njegove rezervacije i njega
+    
     public function banujKorisnika($id)
     {
         $korisnik = \App\Models\User::find($id);
@@ -140,10 +140,10 @@ class RezervacijaController extends Controller
             return response()->json(['message' => 'Korisnik nije pronađen!'], 404);
         }
 
-        // Brišemo njegove rezervacije
+        
         \App\Models\Rezervacija::where('user_id', $id)->delete();
 
-        // Brišemo korisnika
+      
         $korisnik->delete();
 
         return response()->json(['message' => 'Korisnik uspešno banovan!']);

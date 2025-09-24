@@ -1,8 +1,8 @@
 import React from "react";
-import { useParams, useNavigate, Link } from "react-router-dom"; // Dodajemo useNavigate
+import { useParams, useNavigate, Link } from "react-router-dom"; 
 import "./ProductDetails.css";
 
-// Dummy podaci (za sada)
+
 const salas = [
   {
     id: 1,
@@ -57,8 +57,8 @@ const ProductDetails = () => {
         <button className="reserve-button">Rezerviši</button>
       </Link>
 
-      {/* Alternativa: ako ne želiš Link, možeš koristiti navigate */}
-      {/* <button className="reserve-button" onClick={() => navigate(`/rezervacija/${id}`)}>Rezerviši</button> */}
+      {}
+      {}
     </div>
   );
 };

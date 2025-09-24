@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
 import "./Breadcrumbs.css";
 
 const Breadcrumbs = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  const [salaTip, setSalaTip] = useState(null);
-
-  useEffect(() => {
-    // Ako je ruta u formatu /rezervacija/:id
+  // Ako je ruta /rezervacija/:id spremi URL, inače null
+  const salaUrl = useMemo(() => {
     if (pathnames[0] === "rezervacija" && pathnames.length === 2) {
       const id = pathnames[1];
-      fetch(`http://127.0.0.1:8000/api/prostorije/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.tip) setSalaTip(data.tip);
-        })
-        .catch((err) => console.error("Greška prilikom učitavanja tipa:", err));
+      return `http://127.0.0.1:8000/api/prostorije/${id}`;
     }
+    return null;
   }, [location.pathname]);
 
+  const { data: salaData } = useFetch(salaUrl);
+  const salaTip = salaData?.tip ?? null;
+
   const formatText = (str, index) => {
-    // Ako je poslednji segment i ruta je /rezervacija/:id → prikazi tip umesto ID
+    // Ako je poslednji segment i ruta je /rezervacija/:id → prikaži tip umesto ID
     if (pathnames[0] === "rezervacija" && index === 1 && salaTip) {
       return salaTip;
     }
