@@ -70,7 +70,8 @@ class ProstorijaController extends BaseController
             'kapacitet' => 'required|integer',
             'cena_po_satu' => 'required|numeric',
             'opis' => 'nullable|string',
-            'slika' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+             'slika' => 'required|file|mimetypes:image/jpeg,image/png,image/webp,image/gif,image/svg+xml,image/avif|max:8192',
+
         ]);
 
         if ($request->hasFile('slika')) {
