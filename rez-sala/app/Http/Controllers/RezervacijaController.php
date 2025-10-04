@@ -35,14 +35,10 @@ class RezervacijaController extends Controller
         // ulogovani korisnik (Sanctum)
         $validatedData['user_id'] = $request->user()->id;
 
-        // 1) Učitaj prostoriju
+        //  Učitaj prostoriju
         $prostorija = Prostorija::findOrFail($validatedData['prostorija_id']);
 
-        // 2) Mapiranje tipa prostorije -> ime događaja
-        //    Po tvom pravilu:
-        //    - Seminar tip  -> "Seminar"
-        //    - Premium poslovna -> "Sastanak"
-        //    - Coworking -> "Coworking"
+      
         $mapaTipova = [
             'Seminar'            => 'Seminar',
             'Premium poslovna'   => 'Sastanak',
@@ -50,13 +46,12 @@ class RezervacijaController extends Controller
         ];
         $imeDogadjaja = $mapaTipova[$prostorija->tip] ?? 'Događaj';
 
-        // 3) Upis u tabelu dogadjaj (očekivanaPoseta = kapacitet sale)
         $dogadjaj = Dogadjaj::create([
             'ime'              => $imeDogadjaja,
             'ocekivanaPoseta'  => (int) $prostorija->kapacitet,
         ]);
 
-        // 4) Kreiraj rezervaciju (standardno)
+        // 
         $rezervacija = Rezervacija::create($validatedData);
 
         return response()->json([
