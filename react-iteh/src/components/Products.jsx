@@ -10,7 +10,62 @@ const Products = () => {
   const itemsPerPage = 9;
   const navigate = useNavigate();
 
-  
+
+  const [currency, setCurrency] = useState("EUR");
+  const [rates, setRates] = useState({ EUR: 1 });
+  const [rateError, setRateError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadRates = async () => {
+      setRateError("");
+      try {
+        const r1 = await fetch("https://api.exchangerate.host/latest?base=EUR&symbols=EUR,RSD,USD,GBP");
+        const d1 = await r1.json();
+        if (!cancelled && d1 && d1.rates && Object.keys(d1.rates).length) {
+          setRates({ EUR: 1, ...d1.rates }); 
+          return;
+        }
+        throw new Error("exchangerate.host bez rates");
+      } catch (_e1) {
+        try {
+          const r2 = await fetch("https://open.er-api.com/v6/latest/EUR");
+          const d2 = await r2.json();
+          if (!cancelled && d2 && (d2.result === "success" || d2.result === "Success") && d2.rates) {
+
+            const pick = ((rs) => ({
+              EUR: 1,
+              RSD: rs.RSD,
+              USD: rs.USD,
+              GBP: rs.GBP,
+            }))(d2.rates || {});
+            setRates(pick);
+            return;
+          }
+          throw new Error("open.er-api.com bez rates");
+        } catch (_e2) {
+          if (!cancelled) setRateError("Kurs nije učitan (prikaz u EUR).");
+        }
+      }
+    };
+
+    loadRates();
+    return () => { cancelled = true; };
+  }, []);
+
+  const toCurrency = (eurValue) => {
+    const num = Number(eurValue);
+    if (Number.isNaN(num)) return `${eurValue} ${currency}/h`;
+    const rate = rates?.[currency] ?? 1;
+    const value = num * rate;
+    const formatted =
+      currency === "RSD"
+        ? Math.round(value).toLocaleString("sr-RS")
+        : value.toFixed(2);
+    return `${formatted} ${currency}/h`;
+  };
+
   const url = useMemo(() => {
     const qp = new URLSearchParams();
     if (filters.grad) qp.append("grad", filters.grad);
@@ -52,8 +107,24 @@ const Products = () => {
             <input type="number" name="minCena" placeholder="Min cena (€)" value={filters.minCena} onChange={handleFilterChange} />
             <input type="number" name="maxCena" placeholder="Max cena (€)" value={filters.maxCena} onChange={handleFilterChange} />
             <input type="date" name="slobodanDatum" value={filters.slobodanDatum} onChange={handleFilterChange} />
+
             {}
-            <button className="search-button" onClick={() => {  }}>
+            <select
+              className="currency-select"
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              title="Valuta prikaza"
+            >
+              <option value="EUR">EUR</option>
+              <option value="RSD">RSD</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+            </select>
+
+            {rateError && <small className="rate-error">{rateError}</small>}
+
+            {}
+            <button className="search-button" onClick={() => {}}>
               Pretraži
             </button>
             <button className="search-button" onClick={resetFilters}>Reset</button>
@@ -76,7 +147,8 @@ const Products = () => {
                 name={sala.tip}
                 location={`${sala.ulica}, ${sala.grad}`}
                 capacity={sala.kapacitet}
-                price={`${sala.cena_po_satu}€/h`}
+               
+                price={toCurrency(sala.cena_po_satu)}
                 image={`${sala.slika}`}
                 onDetailsClick={() => navigate(`/rezervacija/${sala.idProstorija}`)}
               />
